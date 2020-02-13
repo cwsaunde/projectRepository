@@ -1,0 +1,12 @@
+# CREATE for Users Table
+CREATE TABLE `group7-2`.`Users` (
+  `userID` VARCHAR(10) NOT NULL,
+  `firstName` VARCHAR(45) NOT NULL,
+  `middleName` VARCHAR(45) NOT NULL,
+  `lastName` VARCHAR(45) NOT NULL,
+  `password` CHAR(10) NOT NULL,
+  PRIMARY KEY (`userID`))
+COMMENT = 'Table for all users';
+
+# User Table Insert Statements
+
