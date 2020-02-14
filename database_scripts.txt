@@ -9,4 +9,8 @@ CREATE TABLE `group7-2`.`Users` (
 COMMENT = 'Table for all users';
 
 # User Table Insert Statements
-
+Insert into Users Values ('hsolo', 'Han', Null, 'Solo', 'ushotfirst');
+Insert Into Users values ('jarjarb', 'Jar Jar', Null, 'Binks', 'issasecret');
+Insert Into Users values ('lskywalk', 'Luke', 'A', 'Skywalker', 'forcerocks');
+Insert Into Users values ('okenobi', 'Obi-Wan', Null, 'Kenobi', 'benismetoo');
+Insert Into Users values ('jfett', 'Jango', 'X', 'Fett', 'bountyhunt');
