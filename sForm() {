@@ -1,0 +1,35 @@
+[33mcommit 5ec3afb27a394c94d2d3e17efff5b10a5a0024e6[m[33m ([m[1;36mHEAD -> [m[1;32mLogin[m[33m, [m[1;31morigin/Login[m[33m)[m
+Author: Alberto <albertoz24594@gmail.com>
+Date:   Sun Feb 16 17:43:24 2020 -0700
+
+    login files
+
+[33mcommit d917335a881648e955a108ae4ded9e4b15a89b1b[m
+Author: Alberto <albertoz24594@gmail.com>
+Date:   Sun Feb 16 16:50:16 2020 -0700
+
+    added Login function
+
+[33mcommit fb08acb37a0d295a669a7286d47f663f35dd882a[m
+Author: cwsaunde <cwsaunde@asu.edu>
+Date:   Fri Feb 14 10:22:26 2020 -0700
+
+    Updated database scripts
+
+[33mcommit 6db6cc58fc5a64856ca061de68ec7a9450382ffa[m
+Author: cwsaunde <cwsaunde@asu.edu>
+Date:   Thu Feb 13 16:03:19 2020 -0700
+
+    Database Scripts
+
+[33mcommit 6332bc38ab157f875a0eee3d473258952ec8b207[m
+Author: cwsaunde <cwsaunde@asu.edu>
+Date:   Tue Feb 11 17:02:45 2020 -0700
+
+    initial setup
+
+[33mcommit 90a57112b27cec7653ca67d2ea89b3ecb31b0e74[m
+Author: cwsaunde <60115887+cwsaunde@users.noreply.github.com>
+Date:   Tue Feb 11 16:58:22 2020 -0700
+
+    Initial commit
