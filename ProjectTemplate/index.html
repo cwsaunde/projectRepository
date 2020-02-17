@@ -8,12 +8,15 @@
 
 	<!--YOUR OWN JAVASCRIPT CAN GO RIGHT HERE-->
 	<script type="text/javascript">
-		function TestButtonHandler() {
-			var webMethod = "ProjectServices.asmx/TestConnection";
-			var parameters = "{}";
-
-			//jQuery ajax method
-			$.ajax({
+        function TestButtonHandler() {
+            var webMethod = "ProjectServices.asmx/TestConnection";
+            //var U = document.getElementById("User").value;
+            //var P = document.getElementById("Pass").value
+            var parameters = "{}";
+            }
+            
+            //jQuery ajax method
+            $.ajax({
 				type: "POST",
 				url: webMethod,
 				data: parameters,
@@ -26,8 +29,8 @@
 				error: function (e) {
 					alert("this code will only execute if javascript is unable to access the webservice");
 				}
-			});
-		}
+            });
+
 	</script>
 	<!--END OF YOUR OWN JAVASCRIPT-->
 
@@ -38,6 +41,30 @@
 	<!--END OF YOUR OWN CSS-->
 </head >
 <body>
-	<button onclick="javascript: TestButtonHandler();">Click here to test connection!</button>
+    <header>
+        <h1>Order 66</h1>
+        <hr id="horiz">
+    </header>
+
+    <main>
+        <section class="inputArea">
+            <p><i><u>Login</u></i></p>
+            <div>
+                <p>User Name: <input type="text" id="User"> Password: <input type="text" id="Pass"></p>
+            </div>
+            <br>
+            <button onclick="javascript: TestButtonHandler();">Login</button>
+        </section>
+        <br>
+        <p><i><u>Login Info:</u></i></p>
+    </main>
+
+    <footer>
+        <br>
+        <hr id="horiz">
+        Login Page
+    </footer>
+    <script src="http://code.jquery.com/jquery-3.4.1.min.js" type="text/javascript"></script>
+    <script src="generateRegistration.js" type="text/javascript"></script>
 </body>
 </html >

@@ -40,20 +40,21 @@ namespace ProjectTemplate
 		[WebMethod(EnableSession = true)]
 		/////////////////////////////////////////////////////////////////////////
 		public string TestConnection()
-		{
-			try
 			{
-				string testQuery = "select * from Users";
+            try {
+                //string testQuery = "select * from Users WHERE" + " Userid =" + user + "passWord = " + pass;
+                string testQuery = "select * from Users";
 
-				////////////////////////////////////////////////////////////////////////
-				///here's an example of using the getConString method!
-				////////////////////////////////////////////////////////////////////////
-				MySqlConnection con = new MySqlConnection(getConString());
+                ////////////////////////////////////////////////////////////////////////
+                ///here's an example of using the getConString method!
+                ////////////////////////////////////////////////////////////////////////
+                MySqlConnection con = new MySqlConnection(getConString());
 				////////////////////////////////////////////////////////////////////////
 
 				MySqlCommand cmd = new MySqlCommand(testQuery, con);
 				MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
 				DataTable table = new DataTable();
+                
 				adapter.Fill(table);
 				return "Success!";
 			}
