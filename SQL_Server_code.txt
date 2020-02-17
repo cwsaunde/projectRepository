@@ -1,0 +1,58 @@
+<script type="text/javascript">
+    var selectedValue;
+
+    function changeFunc() {selectedValue = menuList.options[menuList.selectedIndex].value;
+    
+    	var entry = document.getElementById('menuList').value;
+    	console.log(entry);
+    	var sqlStmt = "SELECT * FROM Menu ";
+        var whereClause = "WHERE Name = " + "'" + entry +"'";
+
+        sqlStmt = sqlStmt + whereClause;
+
+        console.log(sqlStmt);
+
+        MySql.Execute(
+        "107.180.1.16:3306", 	// Address
+        "group7-2",		// user
+        "!!Group7",		// password
+        "Users",		// database name
+        sqlStmt,
+        function(data){
+          console.log(sqlStmt);
+          console.log('data parameter: ' + data);
+          var menuItems = JSON.stringify(data);
+          console.log(menuItems);
+
+          document.getElementById('output').innerHTML = menuItems;
+  		  var recordAsString = JSON.stringify(data.Result[0].Name);
+          document.getElementById('output').innerHTML = recordAsString;
+
+          var fieldAsString = data.Result[0].Price;
+          document.getElementById('output').innerHTML = "$" + parseFloat(fieldAsString).toFixed(2);
+        }
+          );
+        }
+
+    function processForm(){
+    	var fname = document.getElementById('Fname').value;
+    	var	Last = document.getElementById('Lname').value;
+    	var selection = document.getElementById('menuList').value;
+    	var qty = document.getElementById('quantity').value;
+    	var p = document.getElementById('output').innerHTML;
+
+    	var total = parseFloat(qty)*parseFloat(p.substring(1));
+    	console.log(typeof(qty));
+    	console.log(typeof(p));
+    	console.log("Thank you " + fname + " " + Last + ". The total price for your order of " + qty + ' ' + selection +" is " + total);
+    	document.getElementById('display').innerHTML = "Thank you " + fname + " " + Last + ". The total price for your order of " + qty + ' ' + selection +"(s) is $" + total.toFixed(2);
+    	var fname = document.getElementById('Fname').value = " ";
+    	var	Last = document.getElementById('Lname').value = " ";
+    	var selection = document.getElementById('menuList').value = " ";
+    	var qty = document.getElementById('quantity').value = " ";
+    	var p = document.getElementById('output').innerHTML = " ";
+
+    }
+    
+       
+    </script>
