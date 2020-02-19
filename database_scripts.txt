@@ -1,16 +1,21 @@
-# CREATE for Users Table
+# Updated Users Table
 CREATE TABLE `group7-2`.`Users` (
-  `userID` VARCHAR(10) NOT NULL,
-  `firstName` VARCHAR(45) NOT NULL,
-  `middleName` VARCHAR(45) NOT NULL,
-  `lastName` VARCHAR(45) NOT NULL,
-  `password` CHAR(10) NOT NULL,
-  PRIMARY KEY (`userID`))
-COMMENT = 'Table for all users';
+  `userNum` INT NOT NULL AUTO_INCREMENT,
+  `userID` VARCHAR(45) NOT NULL,
+  `userPass` VARCHAR(45) NOT NULL,
+  `fName` VARCHAR(45) NOT NULL,
+  `mName` VARCHAR(45) NULL,
+  `lName` VARCHAR(45) NOT NULL,
+  `dateOfBirth` DATE NOT NULL,
+  `dateJoined` DATE NOT NULL,
+  `userType` CHAR(1) NOT NULL,
+  PRIMARY KEY (`userNum`));
+
+
 
 # User Table Insert Statements
-Insert into Users Values ('hsolo', 'Han', Null, 'Solo', 'ushotfirst');
-Insert Into Users values ('jarjarb', 'Jar Jar', Null, 'Binks', 'issasecret');
-Insert Into Users values ('lskywalk', 'Luke', 'A', 'Skywalker', 'forcerocks');
-Insert Into Users values ('okenobi', 'Obi-Wan', Null, 'Kenobi', 'benismetoo');
-Insert Into Users values ('jfett', 'Jango', 'X', 'Fett', 'bountyhunt');
+INSERT INTO `group7-2`.`Users` (`userID`, `userPass`, `fName`, `lName`, `dateOfBirth`, `dateJoined`) VALUES ('hsolo', 'ushotfirst', 'Han', 'Solo', '1942-07-13', '2019-1-10');
+INSERT INTO `group7-2`.`Users` (`userID`, `userPass`, `fName`, `lName`, `dateOfBirth`, `dateJoined`) VALUES ('dvader', 'mask4lyfe', 'Darth', 'Vader', '1957-09-09', '1968-11-11');
+INSERT INTO `group7-2`.`Users` (`userID`, `userPass`, `fName`, `lName`, `dateOfBirth`, `dateJoined`) VALUES ('lskywalker', 'thch0sen1', 'Luke',  'Skywalker', '1975-10-03', '1982-11-11');
+INSERT INTO `group7-2`.`Users` (`userID`, `userPass`, `fName`, `mName`, `lName`, `dateOfBirth`, `dateJoined`) VALUES ('jjbinks', 'meesapswd', 'Jar', 'Jar', 'Binks', '1989-10-16', '2003-05-22');
+INSERT INTO `group7-2`.`Users` (`userID`, `userPass`, `fName`, `lName`, `dateOfBirth`, `dateJoined`) VALUES ('emperor', 'unlimited', 'Emperor', 'Palpatine', '1959-08-14', '1966-02-23');
