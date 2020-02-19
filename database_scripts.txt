@@ -9,13 +9,39 @@ CREATE TABLE `group7-2`.`Users` (
   `dateOfBirth` DATE NOT NULL,
   `dateJoined` DATE NOT NULL,
   `userType` CHAR(1) NOT NULL,
-  PRIMARY KEY (`userNum`));
-
+  PRIMARY KEY (`userNum`),
+  UNIQUE INDEX `userID_UNIQUE` (`userID` ASC));
 
 
 # User Table Insert Statements
-INSERT INTO `group7-2`.`Users` (`userID`, `userPass`, `fName`, `lName`, `dateOfBirth`, `dateJoined`) VALUES ('hsolo', 'ushotfirst', 'Han', 'Solo', '1942-07-13', '2019-1-10');
-INSERT INTO `group7-2`.`Users` (`userID`, `userPass`, `fName`, `lName`, `dateOfBirth`, `dateJoined`) VALUES ('dvader', 'mask4lyfe', 'Darth', 'Vader', '1957-09-09', '1968-11-11');
-INSERT INTO `group7-2`.`Users` (`userID`, `userPass`, `fName`, `lName`, `dateOfBirth`, `dateJoined`) VALUES ('lskywalker', 'thch0sen1', 'Luke',  'Skywalker', '1975-10-03', '1982-11-11');
-INSERT INTO `group7-2`.`Users` (`userID`, `userPass`, `fName`, `mName`, `lName`, `dateOfBirth`, `dateJoined`) VALUES ('jjbinks', 'meesapswd', 'Jar', 'Jar', 'Binks', '1989-10-16', '2003-05-22');
-INSERT INTO `group7-2`.`Users` (`userID`, `userPass`, `fName`, `lName`, `dateOfBirth`, `dateJoined`) VALUES ('emperor', 'unlimited', 'Emperor', 'Palpatine', '1959-08-14', '1966-02-23');
+INSERT INTO `group7-2`.`Users` (`userID`, `userPass`, `fName`, `lName`, `dateOfBirth`, `dateJoined`, `userType`) VALUES ('hsolo', 'ushotfirst', 'Han', 'Solo', '1942-07-13', '2019-1-10', 'C');
+INSERT INTO `group7-2`.`Users` (`userID`, `userPass`, `fName`, `lName`, `dateOfBirth`, `dateJoined`, `userType`) VALUES ('dvader', 'mask4lyfe', 'Darth', 'Vader', '1957-09-09', '1968-11-11', 'C');
+INSERT INTO `group7-2`.`Users` (`userID`, `userPass`, `fName`, `lName`, `dateOfBirth`, `dateJoined`, `userType`) VALUES ('lskywalker', 'thch0sen1', 'Luke',  'Skywalker', '1975-10-03', '1982-11-11', 'C');
+INSERT INTO `group7-2`.`Users` (`userID`, `userPass`, `fName`, `mName`, `lName`, `dateOfBirth`, `dateJoined`, `userType`) VALUES ('jjbinks', 'meesapswd', 'Jar', 'Jar', 'Binks', '1989-10-16', '2003-05-22', 'C');
+INSERT INTO `group7-2`.`Users` (`userID`, `userPass`, `fName`, `lName`, `dateOfBirth`, `dateJoined`, `userType`) VALUES ('emperor', 'unlimited', 'Emperor', 'Palpatine', '1959-08-14', '1966-02-23', 'E');
+
+
+# Bank Accounts Table
+CREATE TABLE `group7-2`.`bankAccounts` (
+  `accountNum` INT NOT NULL,
+  `userID` VARCHAR(45) NOT NULL,
+  `amount` FLOAT NOT NULL,
+  `accountType` CHAR(1) NOT NULL,
+  PRIMARY KEY (`accountNum`),
+  INDEX `userID_idx` (`userID` ASC),
+  CONSTRAINT `userID`
+    FOREIGN KEY (`userID`)
+    REFERENCES `group7-2`.`Users` (`userID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+# Bank Accounts Inserts
+Insert Into bankAccounts Values (4242, 'hsolo', 50000, 'D');
+Insert Into bankAccounts Values (4321, 'dvader', 150000, 'D');
+Insert Into bankAccounts Values (2918, 'lskywalker', 75000, 'D');
+Insert Into bankAccounts Values (7320, 'jjbinks', 1000000, 'S');
+
+
+# Drop Tables
+Drop Table bankAccounts;
+Drop Table Users;
