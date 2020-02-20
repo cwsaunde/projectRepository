@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Homepage</title>
+    <style>
+        div.topPage{
+            background-color:black;
+            font:18px;  
+            color:white;
+            overflow:hidden;
+        }
+        div.bottomPage{
+            background-color:black;
+            font:12px;
+            color:white;
+            overflow:hidden;
+        }
+        div.bottomPage.helpLinks{
+            display:inline;
+        }
+        #deathStar{
+            /*overflow:hidden;*/
+            display:block;
+            margin-left:auto;
+            margin-right:auto;
+        }
+        #account{
+            float:left;
+            font-size:24px;
+            margin-left:10%;
+        }
+        #signOut{
+            float:right;
+            font-size:24px;
+            margin-right:10%;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="topPage">
+        <img id="deathStar" src="deathstar.png" height="170" width="170" />
+        <p id="account">Account: </p>
+        <p id="signOut">Sign Out</p>
+    </div>
+    <div class="centerPage">
+        <p>Balance: </p> 
+    </div>
+    <div class="bottomPage">
+        <div class="helpLinks">
+            <ul>
+                <li>Contact Us</li>
+                <li>Support</li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>
