@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <!--DO NOT FORGET THIS SCRIPT TAG SO YOU CAN USE JQUERY!!!!!-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://mysqljs.com/mysql.js" type="text/javascript"></script>
+
+    <!--YOUR OWN JAVASCRIPT CAN GO RIGHT HERE-->
+    <script type="text/javascript">
+        var gUser = localStorage.getItem('key');
+       // var sqlStmt2 = "Select amount from bankAccounts";
+        //var whereClause2 = " WHERE userID = " + "'" + String(gUser) + "'";
+        // Select accountNum from bankAccounts Where userID = 'hsolo'
+        var sqlStmt2 = "Select * from bankAccounts";
+        var whereClause2 = " WHERE userID = " + "'" + String(gUser) + "'";
+        sqlStmt2 = sqlStmt2 + whereClause2;;
+        window.onload = function(){
+                MySql.Execute(
+                    "107.180.1.16",
+                    "group7-2",
+                    "!!Group7",
+                    "group7-2",
+                    sqlStmt2,
+                    function (data) {
+                        var info = data['Result'][0];
+                        var account = info['accountNum'];
+                        var amount = info['amount'];
+                        var accountType = info['accountType'];
+                        document.getElementById("Balance").innerHTML = "Balance: " + amount;
+                        document.getElementById("Account").innerHTML = "Account: " + account;
+                    }
+                );
+        }
+        localStorage.removeItem('key');
+    </script>
+    <title>Homepage</title>
+    <style>
+        div.topPage {
+            background-color: black;
+            font: 18px;
+            color: white;
+            overflow: hidden;
+        }
+
+        div.bottomPage {
+            background-color: black;
+            font: 12px;
+            color: white;
+            overflow: hidden;
+        }
+
+            div.bottomPage.helpLinks {
+                display: inline;
+            }
+
+        #deathStar {
+            /*overflow:hidden;*/
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #account {
+            float: left;
+            font-size: 24px;
+            margin-left: 10%;
+        }
+
+        #signOut {
+            float: right;
+            font-size: 24px;
+            margin-right: 10%;
+        }
+    </style>
+</head>
+<body>
+    <div class="topPage">
+        <img id="deathStar" src="deathstar.png" height="170" width="170" />
+        <p id="Account"> </p>
+        <p id="signOut"><a href="index.html">Sign Out</a></p>
+    </div>
+    <div class="centerPage">
+        <p id="Balance"></p>
+    </div>
+    <div class="bottomPage">
+        <div class="helpLinks">
+            <ul>
+                <li>Contact Us</li>
+                <li>Support</li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>

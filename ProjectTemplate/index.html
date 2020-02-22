@@ -9,39 +9,12 @@
 
     <!--YOUR OWN JAVASCRIPT CAN GO RIGHT HERE-->
     <script type="text/javascript">
-        function TestButtonHandler() {
-            var webMethod = "ProjectServices.asmx/TestConnection";
-            //var U = document.getElementById("User").value;
-            //var P = document.getElementById("Pass").value
-            var parameters = "{}";
-        }
-
-        //jQuery ajax method
-        $.ajax({
-            type: "POST",
-            url: webMethod,
-            data: parameters,
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (msg) {
-                var responseFromServer = msg.d;
-                alert(responseFromServer);
-            },
-            error: function (e) {
-                alert("this code will only execute if javascript is unable to access the webservice");
-            }
-        });
 
         function dbTest() {
-
             var user = document.getElementById("User").value;
-            console.log(user, typeof (user));
             var pass = document.getElementById("Pass").value;
             var sqlStmt = "SELECT * FROM Users ";
-            var whereClause = "Where userID = " + "'" + String(user) + "'";
-
-            console.log(user);
-
+            var whereClause = "Where userID = " + "'" + String(user) + "'" + " AND userPass = " + "'" + String(pass) + "'";
             sqlStmt = sqlStmt + whereClause;
 
             MySql.Execute(
@@ -51,14 +24,19 @@
                 "group7-2",
                 sqlStmt,
                 function (data) {
-                    console.log(data);
+                    if (data['Result'].length == 0) {
+                        alert("Wrong User name or Password!");
+
+                    } else {
+                        localStorage.setItem('key', user);
+                        window.location = "Homepage.html"
+                    }
                 }
             );
+        };
 
-        }
 
-
-    </script>
+/**/</script>
     <!--END OF YOUR OWN JAVASCRIPT-->
     <!--AND YOUR OWN CSS CAN GO HERE AS WELL-->
     <style>
@@ -92,4 +70,4 @@
     <script src="http://code.jquery.com/jquery-3.4.1.min.js" type="text/javascript"></script>
     <script src="generateRegistration.js" type="text/javascript"></script>
 </body>
-</html >
+</html>
