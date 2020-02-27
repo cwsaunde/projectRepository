@@ -10,31 +10,110 @@
     <!--YOUR OWN JAVASCRIPT CAN GO RIGHT HERE-->
     <script type="text/javascript">
         var gUser = localStorage.getItem('key');
-       // var sqlStmt2 = "Select amount from bankAccounts";
-        //var whereClause2 = " WHERE userID = " + "'" + String(gUser) + "'";
-        // Select accountNum from bankAccounts Where userID = 'hsolo'
         var sqlStmt2 = "Select * from bankAccounts";
-        var whereClause2 = " WHERE userID = " + "'" + String(gUser) + "'";
-        sqlStmt2 = sqlStmt2 + whereClause2;;
-        window.onload = function(){
-                MySql.Execute(
-                    "107.180.1.16",
-                    "group7-2",
-                    "!!Group7",
-                    "group7-2",
-                    sqlStmt2,
-                    function (data) {
-                        var info = data['Result'][0];
-                        var account = info['accountNum'];
-                        var amount = info['amount'];
-                        var accountType = info['accountType'];
-                        document.getElementById("Balance").innerHTML = "Balance: " + amount;
-                        document.getElementById("Account").innerHTML = "Account: " + account;
-                    }
-                );
+        var whereClause2 = " JOIN Users ON Users.userID = bankAccounts.userID  WHERE Users.userID = " + "'" + String(gUser) + "'";
+        sqlStmt2 = sqlStmt2 + whereClause2;
+        window.onload = function () {
+            MySql.Execute(
+                "107.180.1.16",
+                "group7-2",
+                "!!Group7",
+                "group7-2",
+                sqlStmt2,
+                function (data) {
+                    var info = data['Result'][0];
+                    console.log(info); 
+                    var account = info['accountNum'];
+                    var amount = info['amount'];
+                    var accountType = info['accountType'];
+                    var phone = info['phone'];
+                    var location = info['location'];
+                    var User = info['userID'];
+                    document.getElementById("Balance").innerHTML = "Balance: " + amount;
+                    document.getElementById("Account").innerHTML = "Account: " + account;
+                    document.getElementById("Location").innerHTML = "Location: " + location;
+                    document.getElementById("Phone").innerHTML = "Phone: " + phone;
+                    document.getElementById("User").innerHTML = "User:  " + User;
+                }
+            );
+
         }
-        localStorage.removeItem('key');
+
+        function change(value) {
+            if (value == "ePhone") {
+                //console.log('ephone');
+                    function textValue() {
+                    var edit = prompt("Phone Number", "Enter New Phone Number");
+                        return edit;
+                }
+                var Phone = textValue();    
+                let nPhone = Phone;
+                var sqlStmt = "UPDATE Users SET phone = " + "'" + nPhone + "'" + " WHERE userID = " + "'" + gUser + "'";
+                if (nPhone != null) {
+                    MySql.Execute(
+                        "107.180.1.16",
+                        "group7-2",
+                        "!!Group7",
+                        "group7-2",
+                        sqlStmt,
+                        function (data) {
+                            alert("Phone is Updated");
+                            location.reload();
+                        }
+                    );
+                }
+            }
+            else if (value == 'eLocation') {
+                //console.log('Locaiton');
+                function textValue() {
+                    var edit = prompt("Change Location", "Enter New Location");
+                    return edit;
+                }
+                var Location = textValue();    
+                let nLocation = Location;
+                var sqlStmt = "UPDATE Users SET location = " + "'" + nLocation + "'" + " WHERE userID = " + "'" + gUser + "'";
+                if (nLocation != null) {
+                    MySql.Execute(
+                        "107.180.1.16",
+                        "group7-2",
+                        "!!Group7",
+                        "group7-2",
+                        sqlStmt,
+                        function (data) {
+                            alert("Location is Updated");
+                            location.reload();
+                        }
+                    );
+                }
+
+            }
+            else {
+                //console.log('user')
+                function textValue() {
+                    var edit = prompt("Change User ID", "Enter New User ID");
+                    return edit;
+                }
+                var ID = textValue();    
+                let nID = ID;
+                var sqlStmt = "UPDATE Users SET userID = " + "'" + nID + "'" + " WHERE userID = " + "'" + gUser + "'";
+                if (nID != null) {
+                    MySql.Execute(
+                        "107.180.1.16",
+                        "group7-2",
+                        "!!Group7",
+                        "group7-2",
+                        sqlStmt,
+                        function (data) {
+                            alert("UserID is Updated");
+                            location.reload();
+                        }
+                    );
+                }
+            }
+        }
+        //localStorage.removeItem('key');
     </script>
+
     <title>Homepage</title>
     <style>
         div.topPage {
@@ -78,11 +157,20 @@
 <body>
     <div class="topPage">
         <img id="deathStar" src="deathstar.png" height="170" width="170" />
-        <p id="Account"> </p>
+        <p id="Account"></p>
+        <p id="Phone"></p>
+        <p id="Location"></p>
+        <p id="User"></p>
         <p id="signOut"><a href="index.html">Sign Out</a></p>
     </div>
     <div class="centerPage">
         <p id="Balance"></p>
+        <select id="Edit" onchange="change(value)">Settings
+            <option value="ePhone">Edit Phone Number</option>
+            <option value="eLocation" >Edit Location</option>
+            <option value="eUser" >Edit User Name</option>
+        </select>
+        <button onclick="Save">Save</button>
     </div>
     <div class="bottomPage">
         <div class="helpLinks">
