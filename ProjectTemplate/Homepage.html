@@ -111,6 +111,68 @@
                     );
                 }
             }
+
+            
+        }
+
+        function deposit() {
+            var amount = document.getElementById("userAmt").value;
+            var currentAmount = document.getElementById("Balance").innerHTML;
+
+            currentAmount = currentAmount.slice(9, currentAmount.length);
+
+            var newAmount = parseInt(amount) + parseInt(currentAmount);
+
+            
+
+            sqlStmt = "UPDATE bankAccounts SET amount = " + newAmount + " WHERE userID = " + "'" + gUser + "'";
+
+            MySql.Execute(
+                "107.180.1.16",
+                "group7-2",
+                "!!Group7",
+                "group7-2",
+                sqlStmt,
+                function (data) {
+                    alert("The amount has been added");
+                    console.log(data);
+                    location.reload();
+                }
+            );
+
+            
+
+        }
+
+        function withdraw() {
+            var amount = document.getElementById("userAmt").value;
+            var currentAmount = document.getElementById("Balance").innerHTML;
+
+            currentAmount = currentAmount.slice(9, currentAmount.length);
+
+            var newAmount = parseInt(currentAmount) - parseInt(amount);
+
+            console.log('New Amount: ' + newAmount);
+
+            sqlStmt = "UPDATE bankAccounts SET amount = " + newAmount + " WHERE userID = " + "'" + gUser + "'";
+
+            console.log(sqlStmt);
+
+            MySql.Execute(
+                "107.180.1.16",
+                "group7-2",
+                "!!Group7",
+                "group7-2",
+                sqlStmt,
+                function (data) {
+                    alert("The amount has been withdrawn!");
+                    console.log(data);
+                    location.reload();
+                }
+            );
+
+            
+
         }
         //localStorage.removeItem('key');
     </script>
@@ -185,6 +247,17 @@
             <option value="eUser" >Edit User Name</option>
         </select>
         <button onclick="Save">Save</button>
+
+        <br /><hr /><br />
+
+        <div>
+            <input type="number" name="amount" min="0" step="100" id="userAmt" />
+            <button onclick="deposit()">Deposit</button>
+            <button onclick="withdraw()">Withdraw</button>
+        </div>
+
+        <br /><hr /><br />
+
         <h3>Transaction History</h3>
         <table class="transactionLog">
             <tr>
