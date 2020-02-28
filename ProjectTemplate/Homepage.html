@@ -11,6 +11,8 @@
     <!--YOUR OWN JAVASCRIPT CAN GO RIGHT HERE-->
     <script type="text/javascript">
         var gUser = localStorage.getItem('key');
+        var logger;
+
         var sqlStmt2 = "Select * from bankAccounts";
         var whereClause2 = " JOIN Users ON Users.userID = bankAccounts.userID  WHERE Users.userID = " + "'" + String(gUser) + "'";
         sqlStmt2 = sqlStmt2 + whereClause2;
@@ -37,6 +39,8 @@
                     document.getElementById("User").innerHTML = "User:  " + User;
                 }
             );
+
+            console.log("statement: " + logger);
 
         }
 
@@ -125,14 +129,18 @@
 
             
 
-            sqlStmt = "UPDATE bankAccounts SET amount = " + newAmount + " WHERE userID = " + "'" + gUser + "'";
+            sqlStmt = "UPDATE bankAccounts SET amount = " + newAmount + " WHERE userID = " + "'" + gUser + "';";
+            insertStmt = "INSERT INTO tLog (userID, oldAmt, newAmt, date) VALUES ('" + gUser + "'," + parseFloat(currentAmount) + " ," +
+                parseFloat(newAmount) + ", NOW());";
+
+            fullStmt = sqlStmt + insertStmt;
 
             MySql.Execute(
                 "107.180.1.16",
                 "group7-2",
                 "!!Group7",
                 "group7-2",
-                sqlStmt,
+                fullStmt,
                 function (data) {
                     alert("The amount has been added");
                     console.log(data);
@@ -154,24 +162,24 @@
 
             console.log('New Amount: ' + newAmount);
 
-            sqlStmt = "UPDATE bankAccounts SET amount = " + newAmount + " WHERE userID = " + "'" + gUser + "'";
+            sqlStmt = "UPDATE bankAccounts SET amount = " + newAmount + " WHERE userID = " + "'" + gUser + "';";
+            insertStmt = "INSERT INTO tLog (userID, oldAmt, newAmt, date) VALUES ('" + gUser + "'," + parseFloat(currentAmount) + " ," +
+                parseFloat(newAmount) + ", NOW()); ";
 
-            console.log(sqlStmt);
+            fullStmt = sqlStmt + insertStmt;
 
             MySql.Execute(
                 "107.180.1.16",
                 "group7-2",
                 "!!Group7",
                 "group7-2",
-                sqlStmt,
+                fullStmt,
                 function (data) {
                     alert("The amount has been withdrawn!");
                     console.log(data);
                     location.reload();
                 }
             );
-
-            
 
         }
         //localStorage.removeItem('key');
