@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <head>
     <meta charset="utf-8" />
     <!--DO NOT FORGET THIS SCRIPT TAG SO YOU CAN USE JQUERY!!!!!-->
@@ -122,17 +123,29 @@
             color: white;
             overflow: hidden;
         }
+        div.centerPage{
+            font-weight: bold;
+            padding-bottom: 18%;
+        }
 
         div.bottomPage {
             background-color: black;
             font: 12px;
             color: white;
+            padding-top: auto;
+            /* margin-bottom: auto; */
             overflow: hidden;
         }
 
-            div.bottomPage.helpLinks {
-                display: inline;
+            li {
+                display: inline-block;
+                width: 200px;
+                /* padding-left: 50%; */
             }
+
+        table, th, td{
+            border: 1px solid black;
+        }
 
         #deathStar {
             /*overflow:hidden;*/
@@ -158,10 +171,11 @@
     <div class="topPage">
         <img id="deathStar" src="deathstar.png" height="170" width="170" />
         <p id="Account"></p>
+        <p id="signOut"><a href="index.html">Sign Out</a></p>
         <p id="Phone"></p>
         <p id="Location"></p>
         <p id="User"></p>
-        <p id="signOut"><a href="index.html">Sign Out</a></p>
+        <!-- <p id="signOut"><a href="index.html">Sign Out</a></p> -->
     </div>
     <div class="centerPage">
         <p id="Balance"></p>
@@ -171,12 +185,22 @@
             <option value="eUser" >Edit User Name</option>
         </select>
         <button onclick="Save">Save</button>
+        <h3>Transaction History</h3>
+        <table class="transactionLog">
+            <tr>
+                <th>Date</th><th>Location</th><th>Amount</th><th>Total</th>
+            </tr>
+            <tr>
+                <td>ExampleDate</td><td>LocationExample</td><td>ExampleAmount</td><td>ExampleTotal</td>
+            </tr>
+        </table>
     </div>
     <div class="bottomPage">
         <div class="helpLinks">
             <ul>
                 <li>Contact Us</li>
                 <li>Support</li>
+                <li>Terms of Service</li>
             </ul>
         </div>
     </div>
