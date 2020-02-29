@@ -11,10 +11,9 @@
     <!--YOUR OWN JAVASCRIPT CAN GO RIGHT HERE-->
     <script type="text/javascript">
         var gUser = localStorage.getItem('key');
-        var logger;
 
         var sqlStmt2 = "Select * from bankAccounts";
-        var whereClause2 = " JOIN Users ON Users.userID = bankAccounts.userID  WHERE Users.userID = " + "'" + String(gUser) + "'";
+        var whereClause2 = " JOIN Users ON Users.userID = bankAccounts.userID WHERE Users.userID = " + "'" + String(gUser) + "';";
         sqlStmt2 = sqlStmt2 + whereClause2;
         window.onload = function () {
             MySql.Execute(
@@ -25,7 +24,7 @@
                 sqlStmt2,
                 function (data) {
                     var info = data['Result'][0];
-                    console.log(info); 
+                    console.log(info);
                     var account = info['accountNum'];
                     var amount = info['amount'];
                     var accountType = info['accountType'];
@@ -38,10 +37,44 @@
                     document.getElementById("Phone").innerHTML = "Phone: " + phone;
                     document.getElementById("User").innerHTML = "User:  " + User;
                 }
+
+
             );
 
-            console.log("statement: " + logger);
 
+        };
+
+
+        function setTable() {
+            tableStmt = "SELECT * FROM tLog WHERE userID = '" + String(gUser) + "';";
+            MySql.Execute(
+                "107.180.1.16",
+                "group7-2",
+                "!!Group7",
+                "group7-2",
+                tableStmt,
+                function (data) {
+                    var transactions = data['Result'];
+                    var table = document.getElementById("tlogTable");
+
+                    var numOfTrans = transactions.length;
+
+                    //console.log(transactions[0]['oldAmt']);
+
+                    for (x = numOfTrans; x > 0; x--) {
+                        var row = table.insertRow(-1);
+
+                        var dateCell = row.insertCell(0);
+                        var curAmtCell = row.insertCell(1);
+                        var amtChgCell = row.insertCell(2);
+
+                        dateCell.innerHTML = transactions[x-1]['date'];
+                        curAmtCell.innerHTML = transactions[x-1]['newAmt'];
+                        amtChgCell.innerHTML = transactions[x-1]['amtChg'];
+                    }
+                    //var rowFix = table.deleteRow(-1);
+    
+                });
         }
 
         function change(value) {
@@ -126,12 +159,10 @@
             currentAmount = currentAmount.slice(9, currentAmount.length);
 
             var newAmount = parseInt(amount) + parseInt(currentAmount);
-
             
-
             sqlStmt = "UPDATE bankAccounts SET amount = " + newAmount + " WHERE userID = " + "'" + gUser + "';";
-            insertStmt = "INSERT INTO tLog (userID, oldAmt, newAmt, date) VALUES ('" + gUser + "'," + parseFloat(currentAmount) + " ," +
-                parseFloat(newAmount) + ", NOW());";
+            insertStmt = "INSERT INTO tLog (userID, oldAmt, newAmt, amtChg, date) VALUES ('" + gUser + "'," + parseFloat(currentAmount) + " ," +
+                parseFloat(newAmount) + "," + (parseFloat(newAmount) - parseFloat(currentAmount)) +", NOW());";
 
             fullStmt = sqlStmt + insertStmt;
 
@@ -163,8 +194,8 @@
             console.log('New Amount: ' + newAmount);
 
             sqlStmt = "UPDATE bankAccounts SET amount = " + newAmount + " WHERE userID = " + "'" + gUser + "';";
-            insertStmt = "INSERT INTO tLog (userID, oldAmt, newAmt, date) VALUES ('" + gUser + "'," + parseFloat(currentAmount) + " ," +
-                parseFloat(newAmount) + ", NOW()); ";
+            insertStmt = "INSERT INTO tLog (userID, oldAmt, newAmt, amtChg, date) VALUES ('" + gUser + "'," + parseFloat(currentAmount) + " ," +
+                parseFloat(newAmount) + "," + (parseFloat(newAmount) - parseFloat(currentAmount)) + ", NOW());";
 
             fullStmt = sqlStmt + insertStmt;
 
@@ -182,6 +213,8 @@
             );
 
         }
+
+        
         //localStorage.removeItem('key');
     </script>
 
@@ -259,7 +292,7 @@
         <br /><hr /><br />
 
         <div>
-            <input type="number" name="amount" min="0" step="100" id="userAmt" />
+            <input type="number" name="amount" min="0" step="100" id="userAmt" placeholder="0"/>
             <button onclick="deposit()">Deposit</button>
             <button onclick="withdraw()">Withdraw</button>
         </div>
@@ -267,12 +300,10 @@
         <br /><hr /><br />
 
         <h3>Transaction History</h3>
-        <table class="transactionLog">
+        <button id="transactionCount" onclick="setTable()">View Transactions</button>
+        <table class="transactionLog" id="tlogTable">
             <tr>
-                <th>Date</th><th>Location</th><th>Amount</th><th>Total</th>
-            </tr>
-            <tr>
-                <td>ExampleDate</td><td>LocationExample</td><td>ExampleAmount</td><td>ExampleTotal</td>
+                <th>Date</th><th>Current</th><th>Amount Taken</th>
             </tr>
         </table>
     </div>
