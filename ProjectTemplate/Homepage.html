@@ -1,7 +1,6 @@
 ﻿<!DOCTYPE html>
-
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
     <!--DO NOT FORGET THIS SCRIPT TAG SO YOU CAN USE JQUERY!!!!!-->
@@ -220,22 +219,27 @@
 
     <title>Homepage</title>
     <style>
+        * {
+            cursor: url("Star_Destroyer_Cursor.cur"), auto;
+        }
         div.topPage {
             background-color: black;
             font: 18px;
             color: white;
             overflow: hidden;
+            padding-left: 2em;
         }
         div.centerPage{
             font-weight: bold;
-            padding-bottom: 18%;
+            padding-bottom: 16%;
+            margin: 0 auto;
+            padding-left: 2em;
         }
 
         div.bottomPage {
             background-color: black;
             font: 12px;
             color: white;
-            padding-top: auto;
             /* margin-bottom: auto; */
             overflow: hidden;
         }
@@ -243,11 +247,11 @@
             li {
                 display: inline-block;
                 width: 200px;
-                /* padding-left: 50%; */
+                padding-left: 5%;
             }
 
         table, th, td{
-            border: 1px solid black;
+            border: 2px solid black;
         }
 
         #deathStar {
@@ -256,12 +260,21 @@
             margin-left: auto;
             margin-right: auto;
         }
+        #starDestroyer  {
+            display: inline;
+            position: absolute;
+            margin: 1em 30em;
+        }
+        #creditSymbol {
+            
+        }
 
         #account {
             float: left;
             font-size: 24px;
             margin-left: 10%;
         }
+
 
         #signOut {
             float: right;
@@ -273,15 +286,16 @@
 <body>
     <div class="topPage">
         <img id="deathStar" src="deathstar.png" height="170" width="170" />
+        <img id="starDestroyer" src="Star_Destroyer.png" height="80" width="120"/>
         <p id="Account"></p>
         <p id="signOut"><a href="index.html">Sign Out</a></p>
         <p id="Phone"></p>
         <p id="Location"></p>
         <p id="User"></p>
-        <!-- <p id="signOut"><a href="index.html">Sign Out</a></p> -->
     </div>
     <div class="centerPage">
-        <p id="Balance"></p>
+        <p id="Balance"><img id="creditSymbol" src="credit_symbol.png" height="15" width="9" align="middle"/></p>
+        <!--<img id="creditSymbol" src="credit_symbol.png" height="15" width="9"/> -->
         <select id="Edit" onchange="change(value)">Settings
             <option value="ePhone">Edit Phone Number</option>
             <option value="eLocation" >Edit Location</option>
@@ -313,6 +327,9 @@
                 <li>Contact Us</li>
                 <li>Support</li>
                 <li>Terms of Service</li>
+                <li>About Us</li>
+                <li>Privacy Policy</li>
+                <li>Public Policy</li>
             </ul>
         </div>
     </div>
