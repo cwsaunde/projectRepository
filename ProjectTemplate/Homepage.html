@@ -3,11 +3,10 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <!--DO NOT FORGET THIS SCRIPT TAG SO YOU CAN USE JQUERY!!!!!-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://mysqljs.com/mysql.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="bank.css">
 
-    <!--YOUR OWN JAVASCRIPT CAN GO RIGHT HERE-->
     <script type="text/javascript">
         var gUser = localStorage.getItem('key');
 
@@ -218,84 +217,21 @@
     </script>
 
     <title>Homepage</title>
-    <style>
-        * {
-            cursor: url("Star_Destroyer_Cursor.cur"), auto;
-        }
-        div.topPage {
-            background-color: black;
-            font: 18px;
-            color: white;
-            overflow: hidden;
-            padding-left: 2em;
-        }
-        div.centerPage{
-            font-weight: bold;
-            padding-bottom: 16%;
-            margin: 0 auto;
-            padding-left: 2em;
-        }
-
-        div.bottomPage {
-            background-color: black;
-            font: 12px;
-            color: white;
-            /* margin-bottom: auto; */
-            overflow: hidden;
-        }
-
-            li {
-                display: inline-block;
-                width: 200px;
-                padding-left: 5%;
-            }
-
-        table, th, td{
-            border: 2px solid black;
-        }
-
-        #deathStar {
-            /*overflow:hidden;*/
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        #starDestroyer  {
-            display: inline;
-            position: absolute;
-            margin: 1em 30em;
-        }
-        #creditSymbol {
-            
-        }
-
-        #account {
-            float: left;
-            font-size: 24px;
-            margin-left: 10%;
-        }
-
-
-        #signOut {
-            float: right;
-            font-size: 24px;
-            margin-right: 10%;
-        }
-    </style>
 </head>
 <body>
     <div class="topPage">
-        <img id="deathStar" src="deathstar.png" height="170" width="170" />
-        <img id="starDestroyer" src="Star_Destroyer.png" height="80" width="120"/>
-        <p id="Account"></p>
-        <p id="signOut"><a href="index.html">Sign Out</a></p>
+        <div class="homepageHeader">
+            <img id="deathStar" src="deathstar.png" height="170" width="170" />
+            <img id="starDestroyer" src="Star_Destroyer.png" height="80" width="120"/>
+        </div>
+        <p id="Account"></p>        
         <p id="Phone"></p>
         <p id="Location"></p>
         <p id="User"></p>
     </div>
     <div class="centerPage">
-        <p id="Balance"><img id="creditSymbol" src="credit_symbol.png" height="15" width="9" align="middle"/></p>
-        <!--<img id="creditSymbol" src="credit_symbol.png" height="15" width="9"/> -->
+        <p id="signOut"><a href="index.html">Sign Out</a></p>
+        <p id="Balance" style="width: 150px;"></p>
         <select id="Edit" onchange="change(value)">Settings
             <option value="ePhone">Edit Phone Number</option>
             <option value="eLocation" >Edit Location</option>
@@ -314,7 +250,9 @@
         <br /><hr /><br />
 
         <h3>Transaction History</h3>
-        <button id="transactionCount" onclick="setTable()">View Transactions</button>
+        <div id="transactionButtonDiv">
+            <button id="transactionCount" onclick="setTable()">View Transactions</button>
+        </div>
         <table class="transactionLog" id="tlogTable">
             <tr>
                 <th>Date</th><th>Current</th><th>Amount Taken</th>

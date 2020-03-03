@@ -1,0 +1,134 @@
+* {
+	font-size: 105%;
+	cursor: url("Star_Destroyer_Cursor.cur"), auto;
+}
+
+body, html {
+  height: 100%;
+}
+
+html {
+	background-image: url("starBackground.jpg");
+}
+
+body {
+	font-family: 'Poller One', serif;
+	color: #ffe919;
+}
+
+header {
+	text-align: center;
+	font-size: 200%;
+}
+
+main {
+	text-align: center;
+}
+
+hr {
+	color: #ffe919;
+}
+
+button {
+	background-color: #ffe919;
+}
+
+li {
+    display: inline-block;
+    width: 200px;
+    padding-left: 5%;
+}
+
+table {
+	margin: auto;
+}
+
+table td {
+	text-align: left;
+}
+
+div.topPage {
+    background-color: black;
+    font: 18px;
+    color: white;
+    overflow: hidden;
+    padding-left: 2em;
+}
+
+div.centerPage{
+    font-weight: bold;
+    padding-bottom: 16%;
+    margin: 0 auto;
+    padding-left: 2em;
+}
+
+div.bottomPage {
+    background-color: black;
+    font: 12px;
+    color: white;
+    overflow: hidden;
+}
+
+.homepageHeader {
+	height: 170px;
+	margin: auto;
+}
+
+.loginPictures {
+	margin-top: 150px;
+}
+
+.loginPictures img {
+	height: 25%;
+	width: 25%;
+}
+
+.transactionLog td {
+	text-align: center;
+	margin-right: 50px;
+	margin-left: 50px;
+	border: 2px solid #ffffff;
+}
+
+.transactionLog th {
+	padding-right: 15px;
+	padding-left: 15px;
+}
+
+.centerPage h3 {
+	text-align: center;
+}
+
+#transactionCount {
+	margin-bottom: 100px;
+}
+
+#transactionButtonDiv {
+	text-align: center;
+}
+
+#deathStar {
+	float: left;
+}
+
+#starDestroyer {
+	float: right;
+	margin-top: 50px;
+}
+
+#account {
+    float: left;
+    font-size: 24px;
+    margin-left: 10%;
+}
+
+
+#signOut {
+    float: right;
+    font-size: 24px;
+    margin-right: 10%;
+}
+
+#signOut a:visited {
+	color: white;
+}
