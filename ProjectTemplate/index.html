@@ -27,9 +27,16 @@
                     if (data['Result'].length == 0) {
                         alert("Wrong User name or Password!");
 
-                    } else {
+                    }
+
+                    else if (data['Result']['userType'] == 'E') {
                         localStorage.setItem('key', user);
-                        window.location = "Homepage.html"
+                        window.location = "adminHome.html";
+                    }
+
+                    else {
+                        localStorage.setItem('key', user);
+                        window.location = "Homepage.html";
                     }
                 }
             );

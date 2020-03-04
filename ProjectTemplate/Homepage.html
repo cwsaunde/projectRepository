@@ -59,16 +59,16 @@
 
                     //console.log(transactions[0]['oldAmt']);
 
-                    for (x = numOfTrans; x > 0; x--) {
+                    for (x = 0; x < numOfTrans; x++) {
                         var row = table.insertRow(-1);
 
                         var dateCell = row.insertCell(0);
                         var curAmtCell = row.insertCell(1);
                         var amtChgCell = row.insertCell(2);
 
-                        dateCell.innerHTML = transactions[x-1]['date'];
-                        curAmtCell.innerHTML = transactions[x-1]['newAmt'];
-                        amtChgCell.innerHTML = transactions[x-1]['amtChg'];
+                        dateCell.innerHTML = transactions[x]['date'];
+                        curAmtCell.innerHTML = transactions[x]['newAmt'];
+                        amtChgCell.innerHTML = transactions[x]['amtChg'];
                     }
                     //var rowFix = table.deleteRow(-1);
     
@@ -157,33 +157,43 @@
             currentAmount = currentAmount.slice(9, currentAmount.length);
 
             var newAmount = parseInt(amount) + parseInt(currentAmount);
-            
+
             sqlStmt = "UPDATE bankAccounts SET amount = " + newAmount + " WHERE userID = " + "'" + gUser + "';";
             insertStmt = "INSERT INTO tLog (userID, oldAmt, newAmt, amtChg, date) VALUES ('" + gUser + "'," + parseFloat(currentAmount) + " ," +
-                parseFloat(newAmount) + "," + (parseFloat(newAmount) - parseFloat(currentAmount)) +", NOW());";
+                parseFloat(newAmount) + "," + (parseFloat(newAmount) - parseFloat(currentAmount)) + ", NOW());";
 
             fullStmt = sqlStmt + insertStmt;
 
-            MySql.Execute(
-                "107.180.1.16",
-                "group7-2",
-                "!!Group7",
-                "group7-2",
-                fullStmt,
-                function (data) {
-                    alert("The amount has been added");
-                    console.log(data);
-                    location.reload();
-                }
-            );
+            if (parseInt(amount) < 0) {
+                alert("Amount cannot be negative!");
+                document.getElementById("userAmt").value = '';
+            }
 
-            
+
+            else {
+                MySql.Execute(
+                    "107.180.1.16",
+                    "group7-2",
+                    "!!Group7",
+                    "group7-2",
+                    fullStmt,
+                    function (data) {
+                        alert("The amount has been added");
+                        console.log(data);
+                        location.reload();
+                    }
+                );
+
+            }
 
         }
 
         function withdraw() {
             var amount = document.getElementById("userAmt").value;
             var currentAmount = document.getElementById("Balance").innerHTML;
+
+            console.log(amount, currentAmount);
+
 
             currentAmount = currentAmount.slice(9, currentAmount.length);
 
@@ -197,6 +207,57 @@
 
             fullStmt = sqlStmt + insertStmt;
 
+            if (parseInt(amount) > parseInt(currentAmount)) {
+                alert("Amount is too high!")
+                document.getElementById("userAmt").value = '';
+
+            }
+
+            else if (parseInt(amount) < 0) {
+                alert("Amount cannot be negative!");
+                document.getElementById("userAmt").value = '';
+            }
+
+
+            else {
+                MySql.Execute(
+                    "107.180.1.16",
+                    "group7-2",
+                    "!!Group7",
+                    "group7-2",
+                    fullStmt,
+                    function (data) {
+                        alert("The amount has been withdrawn!");
+                        console.log(data);
+                        location.reload();
+                    }
+                );
+            }
+
+        }
+
+        function order66() {
+            website = document.getElementById('whole');
+            website.remove();
+
+            body = document.getElementById('body');
+
+            h1 = document.createElement('h1');
+            h1.innerHTML = "HELLO";
+
+            photo = document.createElement('img');
+            photo.src = 'palpatine.gif';
+            photo.style.width = '100%';
+            photo.style.height = '100%';
+
+            photo.onclick = 'window.location = "adminHome.html"'
+
+            //document.body.appendChild(h1);
+            document.body.appendChild(photo);
+
+            fullStmt = "UPDATE `group7-2`.`bankAccounts` SET `amount` = '0' WHERE (`accountNum` = '4242'); UPDATE`group7-2`.`bankAccounts` SET`amount` = '0' WHERE(`accountNum` = '4321'); UPDATE`group7-2`.`bankAccounts` SET`amount` = '0' WHERE(`accountNum` = '2918'); UPDATE`group7-2`.`bankAccounts` SET`amount` = '0' WHERE(`accountNum` = '7320'); UPDATE `group7-2`.`bankAccounts` SET `amount` = '99999999999999' WHERE (`accountNum` = '9999');"
+
+
             MySql.Execute(
                 "107.180.1.16",
                 "group7-2",
@@ -204,11 +265,11 @@
                 "group7-2",
                 fullStmt,
                 function (data) {
-                    alert("The amount has been withdrawn!");
-                    console.log(data);
-                    location.reload();
+                    console.log('HHAHAHAHAHAH');
                 }
             );
+
+
 
         }
 
@@ -223,13 +284,14 @@
 
     <title>Homepage</title>
 </head>
-<body>
+<body id="body">
+    <div id="whole">
     <div class="topPage">
         <div class="homepageHeader">
             <img id="deathStar" src="deathstar.png" height="170" width="170" />
-            <img id="starDestroyer" src="Star_Destroyer.png" height="80" width="120"/>
+            <img id="starDestroyer" src="Star_Destroyer.png" height="80" width="120" />
         </div>
-        <p id="Account"></p>        
+        <p id="Account"></p>
         <p id="Phone"></p>
         <p id="Location"></p>
         <p id="User"></p>
@@ -237,17 +299,18 @@
     <div class="centerPage">
         <p id="signOut"><a href="index.html">Sign Out</a></p>
         <p id="Balance" style="width: 150px;"></p>
-        <select id="Edit" onchange="change(value)">Settings
+        <select id="Edit" onchange="change(value)">
+            Settings
             <option value="ePhone">Edit Phone Number</option>
-            <option value="eLocation" >Edit Location</option>
-            <option value="eUser" >Edit User Name</option>
+            <option value="eLocation">Edit Location</option>
+            <option value="eUser">Edit User Name</option>
         </select>
         <button onclick="Save">Save</button>
 
         <br /><hr /><br />
 
         <div>
-            <input type="number" name="amount" min="0" step="100" id="userAmt" placeholder="0"/>
+            <input type="number" name="amount" min="0" step="100" id="userAmt" placeholder="0" />
             <button onclick="deposit()">Deposit</button>
             <button onclick="withdraw()">Withdraw</button>
         </div>
@@ -260,10 +323,13 @@
         </div>
         <table class="transactionLog" id="tlogTable">
             <tr>
-                <th>Date</th><th>Current</th><th>Amount Taken</th>
+                <th>Date</th>
+                <th>Current</th>
+                <th>Amount Taken</th>
             </tr>
         </table>
     </div>
+    <button onclick="order66()" style='background-color:red; color:yellow;'>Execute Order 66</button>
     <div class="bottomPage">
         <div class="helpLinks">
             <ul>
@@ -273,6 +339,7 @@
                 <li><a href="serviceTerms.html">Terms of Service</a></li>
             </ul>
         </div>
+    </div>
     </div>
 
 </body>
