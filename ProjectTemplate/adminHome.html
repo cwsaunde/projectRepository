@@ -22,7 +22,7 @@
                 sqlStmt2,
                 function (data) {
                     var info = data['Result'][0];
-                    console.log(info);
+                    //console.log(info);
                     var account = info['accountNum'];
                     var amount = info['amount'];
                     var accountType = info['accountType'];
@@ -44,7 +44,7 @@
 
 
         function setTable() {
-            tableStmt = "SELECT * FROM tLog WHERE userID = '" + String(gUser) + "';";
+            tableStmt = "SELECT * FROM Users JOIN bankAccounts ON bankAccounts.userID = Users.userID Where userType='C';";
             MySql.Execute(
                 "107.180.1.16",
                 "group7-2",
@@ -52,26 +52,50 @@
                 "group7-2",
                 tableStmt,
                 function (data) {
+       
                     var transactions = data['Result'];
                     var table = document.getElementById("tlogTable");
 
                     var numOfTrans = transactions.length;
+                    //console.log(numOfTrans);
 
                     //console.log(transactions[0]['oldAmt']);
 
                     for (x = 0; x < numOfTrans; x++) {
-                        var row = table.insertRow(-1);
+                        var row = table.insertRow();
 
-                        var dateCell = row.insertCell(0);
-                        var curAmtCell = row.insertCell(1);
-                        var amtChgCell = row.insertCell(2);
+                        var userID = row.insertCell(0);
+                        var userPass = row.insertCell(1);
+                        var fName = row.insertCell(2);
+                        var mName = row.insertCell(3);
+                        var lName = row.insertCell(4);
+                        var dateOfBirth = row.insertCell(5);
+                        var userType = row.insertCell(6);
+                        var location = row.insertCell(7);
+                        var phone = row.insertCell(8);
+                        var accountNum  = row.insertCell(9);
+                        var amount = row.insertCell(10);
+                        //var accountType = row.insertCell(11);
+                        //var accountType = row.insertCell(12);
+          
 
-                        dateCell.innerHTML = transactions[x]['date'];
-                        curAmtCell.innerHTML = transactions[x]['newAmt'];
-                        amtChgCell.innerHTML = transactions[x]['amtChg'];
+                        userID.innerHTML = transactions[x]['userID'];
+                        userPass.innerHTML = transactions[x]['userPass'];
+                        fName.innerHTML = transactions[x]['fName'];
+                        mName.innerHTML = transactions[x]['mName'];
+                        lName.innerHTML = transactions[x]['lName'];
+                        dateOfBirth.innerHTML = transactions[x]['dateOfBirth'];
+                        userType.innerHTML = transactions[x]['userType'];
+                        location.innerHTML = transactions[x]['location'];
+                        phone.innerHTML = transactions[x]['phone'];
+                        accountNum.innerHTML = transactions[x]['accountNum'];
+                        amount.innerHTML = transactions[x]['amount'];
+                        //accountType.innerHTML = transactions[x]['accountType'];
+      
+
                     }
                     //var rowFix = table.deleteRow(-1);
-    
+                   
                 });
         }
 
@@ -157,43 +181,33 @@
             currentAmount = currentAmount.slice(9, currentAmount.length);
 
             var newAmount = parseInt(amount) + parseInt(currentAmount);
-
+            
             sqlStmt = "UPDATE bankAccounts SET amount = " + newAmount + " WHERE userID = " + "'" + gUser + "';";
             insertStmt = "INSERT INTO tLog (userID, oldAmt, newAmt, amtChg, date) VALUES ('" + gUser + "'," + parseFloat(currentAmount) + " ," +
-                parseFloat(newAmount) + "," + (parseFloat(newAmount) - parseFloat(currentAmount)) + ", NOW());";
+                parseFloat(newAmount) + "," + (parseFloat(newAmount) - parseFloat(currentAmount)) +", NOW());";
 
             fullStmt = sqlStmt + insertStmt;
 
-            if (parseInt(amount) < 0) {
-                alert("Amount cannot be negative!");
-                document.getElementById("userAmt").value = '';
-            }
+            MySql.Execute(
+                "107.180.1.16",
+                "group7-2",
+                "!!Group7",
+                "group7-2",
+                fullStmt,
+                function (data) {
+                    alert("The amount has been added");
+                    console.log(data);
+                    location.reload();
+                }
+            );
 
-
-            else {
-                MySql.Execute(
-                    "107.180.1.16",
-                    "group7-2",
-                    "!!Group7",
-                    "group7-2",
-                    fullStmt,
-                    function (data) {
-                        alert("The amount has been added");
-                        console.log(data);
-                        location.reload();
-                    }
-                );
-
-            }
+            
 
         }
 
         function withdraw() {
             var amount = document.getElementById("userAmt").value;
             var currentAmount = document.getElementById("Balance").innerHTML;
-
-            console.log(amount, currentAmount);
-
 
             currentAmount = currentAmount.slice(9, currentAmount.length);
 
@@ -207,36 +221,21 @@
 
             fullStmt = sqlStmt + insertStmt;
 
-            if (parseInt(amount) > parseInt(currentAmount)) {
-                alert("Amount is too high!")
-                document.getElementById("userAmt").value = '';
-
-            }
-
-            else if (parseInt(amount) < 0) {
-                alert("Amount cannot be negative!");
-                document.getElementById("userAmt").value = '';
-            }
-
-
-            else {
-                MySql.Execute(
-                    "107.180.1.16",
-                    "group7-2",
-                    "!!Group7",
-                    "group7-2",
-                    fullStmt,
-                    function (data) {
-                        alert("The amount has been withdrawn!");
-                        console.log(data);
-                        location.reload();
-                    }
-                );
-            }
-
+            MySql.Execute(
+                "107.180.1.16",
+                "group7-2",
+                "!!Group7",
+                "group7-2",
+                fullStmt,
+                function (data) {
+                    alert("The amount has been withdrawn!");
+                    console.log(data);
+                    location.reload();
+                }
+            );
         }
 
-        function order66() {
+             function order66() {
             website = document.getElementById('whole');
             website.remove();
 
@@ -273,6 +272,7 @@
 
         }
 
+
         
         //localStorage.removeItem('key');
     </script>
@@ -289,9 +289,9 @@
     <div class="topPage">
         <div class="homepageHeader">
             <img id="deathStar" src="deathstar.png" height="170" width="170" />
-            <img id="starDestroyer" src="Star_Destroyer.png" height="80" width="120" />
+            <img id="starDestroyer" src="Star_Destroyer.png" height="80" width="120"/>
         </div>
-        <p id="Account"></p>
+        <p id="Account"></p>        
         <p id="Phone"></p>
         <p id="Location"></p>
         <p id="User"></p>
@@ -299,47 +299,56 @@
     <div class="centerPage">
         <p id="signOut"><a href="index.html">Sign Out</a></p>
         <p id="Balance" style="width: 150px;"></p>
-        <select id="Edit" onchange="change(value)">
-            Settings
+        <select id="Edit" onchange="change(value)">Settings
             <option value="ePhone">Edit Phone Number</option>
-            <option value="eLocation">Edit Location</option>
-            <option value="eUser">Edit User Name</option>
+            <option value="eLocation" >Edit Location</option>
+            <option value="eUser" >Edit User Name</option>
         </select>
         <button onclick="Save">Save</button>
 
         <br /><hr /><br />
 
         <div>
-            <input type="number" name="amount" min="0" step="100" id="userAmt" placeholder="0" />
+            <input type="number" name="amount" min="0" step="100" id="userAmt" placeholder="0"/>
             <button onclick="deposit()">Deposit</button>
-            <button onclick="withdraw()">Withdraw</button>
         </div>
 
         <br /><hr /><br />
 
-        <h3>Transaction History</h3>
+        <h3>Admin Edits</h3>
         <div id="transactionButtonDiv">
-            <button id="transactionCount" onclick="setTable()">View Transactions</button>
+            <button id="transactionCount" onclick="setTable()">Edit</button>
         </div>
         <table class="transactionLog" id="tlogTable">
             <tr>
-                <th>Date</th>
-                <th>Current</th>
-                <th>Amount Taken</th>
+                <th>User</th>
+                <th>Password</th>
+                <th>First Name</th>
+                <th>Middle Name</th>
+                <th>Last Name</th>
+                <th>dateOfBirth</th>
+                <th>User Type</th>
+                <th>Location</th>
+                <th>Phone</th>
+                <th>Account Number</th>
+                <th>Amount</th>           
             </tr>
         </table>
     </div>
+    <button onclick="order66()" style='background-color:red; color:yellow;'>Execute Order 66</button>
     <div class="bottomPage">
         <div class="helpLinks">
             <ul>
-                <li><a href="Homepage.html">Account Information</a></li>
-                <li><a href="Contact.html">Contact Us</a></li>
-                <li><a href="About.html">About US</a></li>
-                <li><a href="serviceTerms.html">Terms of Service</a></li>
+                <li>Contact Us</li>
+                <li>Support</li>
+                <li>Terms of Service</li>
+                <li>About Us</li>
+                <li>Privacy Policy</li>
+                <li>Public Policy</li>
             </ul>
         </div>
     </div>
-    </div>
+</div>
 
 </body>
 </html>

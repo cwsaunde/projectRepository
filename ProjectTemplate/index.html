@@ -29,11 +29,12 @@
 
                     }
 
-                    else if (data['Result']['userType'] == 'E') {
+                    else if (data['Result'][0]['userType'] == 'E') {
                         localStorage.setItem('key', user);
                         window.location = "adminHome.html";
                     }
 
+                    
                     else {
                         localStorage.setItem('key', user);
                         window.location = "Homepage.html";
